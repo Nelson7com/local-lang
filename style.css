@@ -177,7 +177,8 @@ body{
     background-color: white;
 }
 .tribe-title h2{
-    margin-top: 30px;
+    margin-top: 30px;margin-left: 10px;
+    color: magenta;
 }
 
 .tribe-list {
@@ -295,18 +296,21 @@ body{
     height: 100%;
     object-fit: cover;
 }
+.how h3{
+    color: magenta;
+}
 
 
 .card-content h3 {
     padding-top: 20px;
     font-size: 1.3rem;
-    color: black;
+    color: magenta;
 }
 
 .card-content p {
     font-weight: bold;
     font-size: 0.88rem;
-    color: black;
+    color: magenta;
     margin-top: 20px;
 }
 
@@ -344,7 +348,7 @@ body{
 .card-content h3 {
     padding-top: 20px;
     font-size: 1.3rem;
-    color: black;
+    color: magenta;
 }
 
 .card-content p {
