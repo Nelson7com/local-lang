@@ -44,114 +44,171 @@ changeBackgroundImage();
 // Badilisha picha kila baada ya sekunde 5 (ms 5000)
 setInterval(changeBackgroundImage, 5000);
 
-const translations = {
+/**
+ * Translation API Manager (Zero-HTML-Modification Version)
+ * Dynamically translates all section titles, paragraphs, buttons, and footer items
+ * between Kiswahili and English while keeping original HTML intact.
+ */
+const TranslationManager = (() => {
+  const STORAGE_KEY = 'app_lang';
+
+  // Translations mapped directly to unique element query selectors
+  const translations = {
     sw: {
-        pageTitle: "Lugha za Asili Tanzania",
-        navHome: "Mwanzo",
-        navLanguages: "Lugha Zetu",
-        navHow: "Jinsi Inavyotumika",
-        navFeatures: "Sifa",
-        startUsing: "Anza kutumia",
-        enableDarkMode: "Washa hali ya giza",
-        enableLightMode: "Washa hali ya mwanga",
-        chooseLanguage: "Chagua lugha",
-        heroTitle: "Lugha za Asili za Tanzania",
-        heroTagline: "Tujifunze, tuzitumie, tuzidumishe",
-        heroDescription: "Lugha za asili za Tanzania",
-        howItWorksButton: "Jinsi Inavyofanya Kazi",
-        tribeTitle: "Lugha za Asili za Tanzania",
-        tribeDescription: "Tudumishe utamaduni, tutumie na kujifunza lugha zetu za asili",
-        howTitle: "Taaluma na sehemu tunapoweza kutumia lugha zetu za asili",
-        teacherTitle: "Waalimu ==> Wanafunzi",
-        teacherDescription: "Inasaidia katika ufundishaji na utoaji wa maarifa kwa wanafunzi.",
-        nurseTitle: "Wauguzi ==> Wagonjwa",
-        nurseDescription: "Inasaidia katika kueleza na kutoa matibabu kwa wagonjwa.",
-        communityTitle: "Jamii ==> Jamii",
-        communityDescription: "Inasaidia katika mawasiliano na utoaji wa maarifa kwa jamii.",
-        businessTitle: "Biashara ==> Wateja",
-        businessDescription: "Inasaidia katika mawasiliano na utoaji wa huduma kwa wateja.",
-        featuresTitle: "Namna inavyofanya kazi ya kutafsiri lugha zetu za asili",
-        featureSpeakTitle: "Mtumiaji anaongea",
-        featureSpeakDescription: "Inasikiliza na kuelewa lugha yoyote anayozungumza.",
-        featureProcessTitle: "AI inachakata na kufikiri",
-        featureProcessDescription: "Inachakata maneno ili kutoa tafsiri na maana kamili.",
-        featureAnswerTitle: "AI inatoa majibu",
-        featureAnswerDescription: "Baada ya kutafsiri lugha ya mtumiaji, AI hutoa majibu kwa maneno ya kuzungumza au maandishi.",
-        featureMeaningTitle: "Maana inatolewa",
-        featureMeaningDescription: "Mtumiaji atapata maana halisi ya lugha husika.",
-        footerTitle: "Lugha za Asili Tanzania",
-        footerDescription: "Tanzania ina zaidi ya lugha 120 za asili zinazotoka katika familia kuu nne za lugha: Bantu, Nilotic, Cushitic, na Khoisan. Ingawa Kiswahili ni lugha ya Taifa na kiunganishi kikuu, lugha za asili kama Kisukuma, Kichagga, Kimakonde, na Kihaya zinaendelea kuhifadhi utamaduni na historia ya jamii husika.",
-        languageFamilies: "Familia Kuu za Lugha",
-        bantuLanguages: "Kisukuma, Kichagga, Kihaya, Kinyakyusa",
-        niloticLanguages: "Kimaasai, Kijaluo",
-        cushiticLanguages: "Kiiraqw, Kiburunge",
-        khoisanLanguages: "Kisandawe, Kihadza",
-        copyright: "© 2026 Hifadhi ya Utamaduni wa Lugha Tanzania. Haki zote zimehifadhiwa."
+      // Navigation
+      '#navMenu li:nth-child(1) a': 'Mwanzo',
+      '#navMenu li:nth-child(2) a': 'Lugha Zetu',
+      '#navMenu li:nth-child(3) a': 'Jinsi Inavyotumika',
+      '#navMenu li:nth-child(4) a': 'Sifa',
+      '.btn-start': 'Anza kutumia',
+
+      // Hero Section
+      '.headings h1': 'Lugha za Asili za Tanzania',
+      '.headings p span': 'Tujifunze,Tuzitumie,Tuzidumishe',
+      '.headings p strong': 'Lugha za Asili yetu Tanzania',
+
+      // Action Buttons
+      '.headings-container button:nth-child(1)': 'Jinsi Inavyofanya Kazi',
+      '.headings-container button:nth-child(2)': 'Anza Kutumia',
+
+      // Tribe Section
+      '#lugha-zetu .tribe-title h2': 'Makabila ya Tanzania',
+      '#lugha-zetu .tribe-title p strong': 'Tudumishe Utamaduni,Tutumie na kujifunza Lugha zetu za Asili',
+
+      // Usage / How Section
+      '#jinsi-inavyotumika > h3': 'Taaluma na Sehemu Tunapoweza Tukatumia Lugha Zetu Za Asili',
+      '#jinsi-inavyotumika > p': 'hizi ni sehemu ambazo lugha hizi ni muhimu kutumika',
+      
+      '#jinsi-inavyotumika .how-card:nth-child(1) .card-content p': 'inasaidia katika ufundishaji na utoaji wa maarifa kwa wanafunzi',
+      '#jinsi-inavyotumika .how-card:nth-child(2) .card-content p': 'inasaidia katika uelezaji na utoaji wa matibabu kwa wagonjwa',
+      '#jinsi-inavyotumika .how-card:nth-child(3) .card-content p': 'inasaidia katika mawasiliano na utoaji wa maarifa kwa jamii',
+      '#jinsi-inavyotumika .how-card:nth-child(4) .card-content p': 'inasaidia katika mawasiliano na utoaji wa huduma kwa wateja',
+
+      // AI Features / Sifa Section
+      '#Sifa > h3': 'namna inavyofanya kazi ya kutafasiri Lugha Zetu Za Asili',
+      '#Sifa .how-card:nth-child(1) .card-content h3': 'Mtumiaji Anaongea',
+      '#Sifa .how-card:nth-child(1) .card-content p': 'inasikiliza inaelewa Lugha yoyote anayoiongea',
+      '#Sifa .how-card:nth-child(2) .card-content h3': 'AI inachakata na kufikiri',
+      '#Sifa .how-card:nth-child(2) .card-content p': 'inafikiri pia inachakata maneno ya lugha ili kuleta tafasiri na maana iliyokamilika',
+      '#Sifa .how-card:nth-child(3) .card-content h3': 'AI Inatoa majibu',
+      '#Sifa .how-card:nth-child(3) .card-content p': 'AI baada ya kufikiri na kutafasiri lugha ya mtumiaji inatoa majibu na maana kwa maneno ya kuongea au ya maandishi',
+      '#Sifa .how-card:nth-child(4) .card-content h3': 'Maana Inatolewa',
+      '#Sifa .how-card:nth-child(4) .card-content p': 'Mtumiaji atapata maana ya Lugha husika katika uhalisia wake',
+
+      // Footer Section
+      '.footer-about h3': 'Lugha za Asili Tanzania',
+      '.footer-about p': 'Tanzania ina zaidi ya lugha 120 za asili zinazotoka katika familia kuu nne za lugha: Bantu, Nilotic, Cushitic, na Khoisan. Ingawa Kiswahili ni lugha ya Taifa na kiunganishi kikuu, lugha za asili kama Kisukuma, Kichagga, Kimakonde, na Kihaya zinaendelea kuhifadhi utamaduni na historia ya jamii husika.',
+      '.footer-languages h4': 'Familia Kuu za Lugha',
+      '.footer-bottom p': '© 2026 Hifadhi ya Utamaduni wa Lugha Tanzania. Haki zote zimehifadhiwa.'
     },
+
     en: {
-        pageTitle: "Tanzania's Indigenous Languages",
-        navHome: "Home",
-        navLanguages: "Our Languages",
-        navHow: "How It Works",
-        navFeatures: "Features",
-        startUsing: "Get started",
-        enableDarkMode: "Enable dark mode",
-        enableLightMode: "Enable light mode",
-        chooseLanguage: "Choose language",
-        heroTitle: "Tanzania's Indigenous Languages",
-        heroTagline: "Let's learn, use, and preserve them",
-        heroDescription: "Tanzania's indigenous languages",
-        howItWorksButton: "How It Works",
-        tribeTitle: "Indigenous Languages of Tanzania",
-        tribeDescription: "Let's preserve our culture, use, and learn our indigenous languages",
-        howTitle: "Fields and places where we can use our indigenous languages",
-        teacherTitle: "Teachers ==> Students",
-        teacherDescription: "Supports teaching and sharing knowledge with students.",
-        nurseTitle: "Nurses ==> Patients",
-        nurseDescription: "Helps explain and provide treatment to patients.",
-        communityTitle: "Community ==> Community",
-        communityDescription: "Supports communication and sharing knowledge within the community.",
-        businessTitle: "Businesses ==> Customers",
-        businessDescription: "Supports communication and service delivery to customers.",
-        featuresTitle: "How our indigenous language translation works",
-        featureSpeakTitle: "The user speaks",
-        featureSpeakDescription: "It listens to and understands the language being spoken.",
-        featureProcessTitle: "AI processes and thinks",
-        featureProcessDescription: "It processes the words to provide a complete translation and meaning.",
-        featureAnswerTitle: "AI provides answers",
-        featureAnswerDescription: "After translating the user's language, AI provides answers in spoken words or text.",
-        featureMeaningTitle: "The meaning is delivered",
-        featureMeaningDescription: "The user receives the true meaning of the language.",
-        footerTitle: "Tanzania's Indigenous Languages",
-        footerDescription: "Tanzania has more than 120 indigenous languages from four major language families: Bantu, Nilotic, Cushitic, and Khoisan. Although Swahili is the national language and a key lingua franca, indigenous languages such as Sukuma, Chagga, Makonde, and Haya continue to preserve the culture and history of their communities.",
-        languageFamilies: "Major Language Families",
-        bantuLanguages: "Sukuma, Chagga, Haya, Nyakyusa",
-        niloticLanguages: "Maasai, Luo",
-        cushiticLanguages: "Iraqw, Burunge",
-        khoisanLanguages: "Sandawe, Hadza",
-        copyright: "© 2026 Tanzania Language Heritage. All rights reserved."
+      // Navigation
+      '#navMenu li:nth-child(1) a': 'Home',
+      '#navMenu li:nth-child(2) a': 'Our Languages',
+      '#navMenu li:nth-child(3) a': 'How It Works',
+      '#navMenu li:nth-child(4) a': 'Features',
+      '.btn-start': 'Get Started',
+
+      // Hero Section
+      '.headings h1': 'Indigenous Languages of Tanzania',
+      '.headings p span': "Let's learn, use, and preserve",
+      '.headings p strong': 'Our Indigenous Languages of Tanzania',
+
+      // Action Buttons
+      '.headings-container button:nth-child(1)': 'How It Works',
+      '.headings-container button:nth-child(2)': 'Get Started',
+
+      // Tribe Section
+      '#lugha-zetu .tribe-title h2': 'Tribes of Tanzania',
+      '#lugha-zetu .tribe-title p strong': "Let's preserve our culture, use and learn our indigenous languages",
+
+      // Usage / How Section
+      '#jinsi-inavyotumika > h3': 'Fields and Sectors Where Our Indigenous Languages Can Be Used',
+      '#jinsi-inavyotumika > p': 'These are key sectors where these indigenous languages are vital to use',
+      
+      '#jinsi-inavyotumika .how-card:nth-child(1) .card-content p': 'Helps in teaching and imparting knowledge to students',
+      '#jinsi-inavyotumika .how-card:nth-child(2) .card-content p': 'Helps in explaining and delivering medical treatments to patients',
+      '#jinsi-inavyotumika .how-card:nth-child(3) .card-content p': 'Helps in communication and knowledge sharing within communities',
+      '#jinsi-inavyotumika .how-card:nth-child(4) .card-content p': 'Helps in business communication and delivering customer service',
+
+      // AI Features / Sifa Section
+      '#Sifa > h3': 'How Indigenous Language AI Translation Works',
+      '#Sifa .how-card:nth-child(1) .card-content h3': 'User Speaks',
+      '#Sifa .how-card:nth-child(1) .card-content p': 'Listens and comprehends any spoken indigenous language',
+      '#Sifa .how-card:nth-child(2) .card-content h3': 'AI Processes & Thinks',
+      '#Sifa .how-card:nth-child(2) .card-content p': 'Analyzes and processes linguistic data to deliver precise contextual translation',
+      '#Sifa .how-card:nth-child(3) .card-content h3': 'AI Generates Output',
+      '#Sifa .how-card:nth-child(3) .card-content p': 'After processing, AI delivers answers and context through voice or text output',
+      '#Sifa .how-card:nth-child(4) .card-content h3': 'Meaning Delivered',
+      '#Sifa .how-card:nth-child(4) .card-content p': 'The user receives authentic context and meaning in real-time',
+
+      // Footer Section
+      '.footer-about h3': 'Indigenous Languages Tanzania',
+      '.footer-about p': 'Tanzania has over 120 indigenous languages originating from four major families: Bantu, Nilotic, Cushitic, and Khoisan. While Swahili serves as the national unifying language, indigenous languages like Sukuma, Chagga, Makonde, and Haya preserve cultural heritage and community history.',
+      '.footer-languages h4': 'Major Language Families',
+      '.footer-bottom p': '© 2026 Tanzania Indigenous Language Cultural Heritage. All rights reserved.'
     }
-};
+  };
 
-const languageSelect = document.getElementById("language-selection");
-const themeToggle = document.querySelector(".theme-toggle");
-const heroTitle = document.querySelector(".headings h1");
-const heroTagline = document.querySelector(".headings p span");
-const heroDescription = document.querySelector(".headings p strong");
-const heroHeadings = document.querySelector(".headings");
+  /**
+   * Applies the language dictionary to the DOM without requiring extra HTML attributes
+   * @param {'sw'|'en'} lang 
+   */
+  const setLanguage = (lang) => {
+    const dict = translations[lang];
+    if (!dict) return;
 
-const heroSlides = {
-    sw: [
-        ["Lugha za Asili za Tanzania", "Tujifunze, tuzitumie, tuzidumishe", "Lugha za asili za Tanzania"],
-        ["Urithi wa Lugha Zetu", "Tunahifadhi utamaduni wetu", "Kwa kujifunza lugha za asili"],
-        ["Lugha Huunganisha Jamii", "Tusikilize, tuelewane, tushirikiane", "Kwa kutumia lugha zetu"]
-    ],
-    en: [
-        ["Tanzania's Indigenous Languages", "Let's learn, use, and preserve them", "Tanzania's indigenous languages"],
-        ["Our Linguistic Heritage", "We preserve our culture", "By learning indigenous languages"],
-        ["Languages Bring Communities Together", "Let's listen, understand, and connect", "By using our languages"]
-    ]
-};
+    localStorage.setItem(STORAGE_KEY, lang);
+    document.documentElement.setAttribute('lang', lang);
+
+    // Apply translations to each selector
+    Object.keys(dict).forEach((selector) => {
+      const element = document.querySelector(selector);
+      if (element) {
+        element.textContent = dict[selector];
+      }
+    });
+
+    // Synchronize select dropdown
+    const selectElem = document.querySelector('.lang-select');
+    if (selectElem) {
+      selectElem.value = lang;
+    }
+  };
+
+  /**
+   * Gets stored language or defaults to Swahili ('sw')
+   * @returns {'sw'|'en'}
+   */
+  const getLanguage = () => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved === 'en' || saved === 'sw' ? saved : 'sw';
+  };
+
+  /**
+   * Binds change listener to existing .lang-select dropdown
+   */
+  const init = () => {
+    document.addEventListener('DOMContentLoaded', () => {
+      const currentLang = getLanguage();
+      setLanguage(currentLang);
+
+      const selectElem = document.querySelector('.lang-select');
+      if (selectElem) {
+        selectElem.value = currentLang;
+        selectElem.addEventListener('change', (e) => {
+          setLanguage(e.target.value);
+        });
+      }
+    });
+  };
+
+  return { init, setLanguage, getLanguage };
+})();
+
+// Auto-run translation initializer
+TranslationManager.init();
 const lughaZaAsili = [
     ["Kisukuma"],
     ["Kichagga"],
@@ -209,3 +266,83 @@ renderTribes(lughaZaAsili);
 
 // 2. Rudia orodha mara ya pili (Duplication ni muhimu ili animation isiache nafasi wazi)
 renderTribes(lughaZaAsili);
+
+/**
+ * Theme Manager API
+ * Handles light/dark mode persistence, toggling, and DOM state updating.
+ */
+const ThemeManager = (() => {
+  const STORAGE_KEY = 'app_theme';
+  const ATTR_NAME = 'data-theme';
+
+  const updateIcon = (theme) => {
+    const iconBtn = document.querySelector('.theme-icon');
+    if (iconBtn) {
+      iconBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+    }
+  };
+
+  const applyTheme = (theme) => {
+    document.documentElement.setAttribute(ATTR_NAME, theme);
+    updateIcon(theme);
+  };
+
+  const getSystemPreference = () => {
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  };
+
+  const getTheme = () => {
+    const savedTheme = localStorage.getItem(STORAGE_KEY);
+    if (savedTheme === 'light' || savedTheme === 'dark') {
+      return savedTheme;
+    }
+    return getSystemPreference();
+  };
+
+  const setTheme = (theme) => {
+    if (theme !== 'light' && theme !== 'dark') return;
+    localStorage.setItem(STORAGE_KEY, theme);
+    applyTheme(theme);
+    window.dispatchEvent(new CustomEvent('themechange', { detail: { theme } }));
+  };
+
+  const toggle = () => {
+    const newTheme = getTheme() === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+    return newTheme;
+  };
+
+  const init = () => {
+    applyTheme(getTheme());
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const iconBtn = document.querySelector('.theme-icon');
+      if (iconBtn) {
+        iconBtn.setAttribute('role', 'button');
+        iconBtn.setAttribute('tabindex', '0');
+        iconBtn.setAttribute('aria-label', 'Toggle theme mode');
+
+        updateIcon(getTheme());
+
+        iconBtn.addEventListener('click', () => toggle());
+        iconBtn.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggle();
+          }
+        });
+      }
+    });
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      if (!localStorage.getItem(STORAGE_KEY)) {
+        applyTheme(e.matches ? 'dark' : 'light');
+      }
+    });
+  };
+
+  return { init, getTheme, setTheme, toggle, getSystemPreference };
+})();
+
+// Auto-initialize theme management
+ThemeManager.init();

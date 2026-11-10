@@ -168,13 +168,13 @@ body{
     margin-top: 30px;
     width: 100%;
     overflow: hidden; 
-    background: #f8fafc;
+    background: var(--bg-secondary);
     padding: 20px 0;
     position: relative;
 }
 .tribe{
     margin-top: 105px;
-    background-color: white;
+    background-color: var(--bg-secondary);
 }
 .tribe-title h2{
     margin-top: 30px;margin-left: 10px;
@@ -205,7 +205,7 @@ body{
 }
 
 .tribe-card:hover{
-    background-color: darkgray;
+    background-color: var(--card-hover);
 } 
 
 .tribe-card h3 {
@@ -233,7 +233,7 @@ body{
     }
 }
 .Sifa{
-    background-color: white;
+    background-color: var(--bg-secondary);
     padding: 30px;
     margin-top: 40px;
 }
@@ -264,7 +264,7 @@ body{
 
 
 .how{
-    background-color: white;
+    background-color: var(--bg-secondary);
     padding-top: 120px;
 }
 .sifa-container {
@@ -277,7 +277,7 @@ body{
 }
 
 .sifa-card {
-    background-color: #ffffff;
+    background-color: var(--bg-card);
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -324,7 +324,7 @@ body{
 }
 
 .how-card {
-    background-color: #ffffff;
+    background-color: var(--bg-card);
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -425,4 +425,300 @@ footer {
     margin-top: 20px;
     font-size: 0.85rem;
     color: #9ca3af;
+}
+
+
+
+
+
+/* ==========================================
+   1. THEME VARIABLES CONFIGURATION
+   ================================          */
+:root {
+  /* Light Mode Defaults */
+  --bg-primary: #ebe4e4;
+  --bg-secondary: #f8fafc;
+  --bg-card: #ffffff;
+  --card-hover: #f1f5f9;
+  
+  --text-main: #1e293b;
+  --heading-main: #0f172a;
+  
+  --nav-bg: rgb(43, 43, 134);
+  --nav-text: white;
+  --nav-border: #e2e8f0;
+  
+  --card-border: #cbd5e1;
+  --input-bg: #f8fafc;
+  --input-border: #cbd5e1;
+  --btn-bg: #242b90;
+  --btn-text: #ffffff;
+}
+
+[data-theme="dark"] {
+  /* Dark Mode: Pure Black Background & Pure White Text Across All Sections */
+  --bg-primary: #000000;     /* Pure Black background for body & sections */
+  --bg-secondary: #080808;   /* Near-black for alternate sections */
+  --bg-card: #121212;        /* Distinct dark surface for cards/containers */
+  --card-hover: #1f2937;
+  
+  --text-main: #ffffff;      /* ALL text forced to pure white */
+  --heading-main: #ffffff;   /* Bright readable highlight accent */
+  
+  --nav-bg: #000000;
+  --nav-text: #ffffff;
+  --nav-border: #262626;
+  
+  --card-border: #333333;    /* Clean visible borders for cards */
+  --input-bg: black;
+  --input-border: #333333;
+  --btn-bg: #3b82f6;
+  --btn-text: #ffffff;
+}
+
+/* ==========================================
+   2. GLOBAL BASE STYLES & TRANSITIONS
+   ================================          */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+section {
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+section:nth-of-type(even) {
+  background-color: var(--bg-secondary);
+}
+
+/* ==========================================
+   3. UNIVERSAL TEXT & HEADING COLOR RULES
+   ================================          */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--heading-main) !important;
+  transition: color 0.3s ease;
+}
+
+p, span, li, a:not(.btn-start), strong {
+  color: var(--text-main) !important;
+  transition: color 0.3s ease;
+}
+
+/* ==========================================
+   4. NAVIGATION BAR STYLING
+   ================================          */
+.navbar {
+  background-color: var(--nav-bg);
+  border-bottom: 1px solid var(--nav-border);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.nav-logo, .nav-menu a {
+  color: var(--nav-text) !important;
+  text-decoration: none;
+}
+
+.menu-btn svg {
+  fill: var(--nav-text);
+}
+
+/* ==========================================
+   5. CARDS, BOXES & CONTAINERS
+   ================================          */
+.how-card, 
+.tribe-list, 
+footer, 
+div[class*="card"] {
+  background-color: var(--bg-card);
+  border-color: var(--card-border);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Ensure SVG icons inside card titles match text color */
+.how-card svg, .card-content svg {
+  fill: var(--text-main);
+}
+
+/* ==========================================
+   6. BUTTONS & CONTROLS
+   ================================          */
+.headings-container button, 
+.btn-start {
+  background-color: var(--btn-bg);
+  color: var(--btn-text) !important;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.lang-select {
+  background-color: var(--input-bg);
+  color: var(--text-main);
+  border: 1px solid var(--input-border);
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+/* ==========================================
+   7. THEME ICON INTERACTION
+   ================================          */
+.theme-icon {
+  cursor: pointer;
+  user-select: none;
+  font-size: 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 50%;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.theme-icon:hover {
+  transform: scale(1.15);
+  background-color: rgba(21, 20, 20, 0.1);
+}
+
+
+
+/* ==========================================
+   PROJECT DEFINITION & HERO ENHANCEMENTS
+   ================================          */
+
+/* 1. Value Proposition Badge */
+.hero-badge {
+  display: inline-block;
+  background-color: var(--btn-bg);
+  color: var(--btn-text) !important;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin-bottom: 15px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s ease;
+}
+
+/* 2. Elevator Pitch & Hero Description */
+.hero-description {
+  font-size: 1.15rem;
+  line-height: 1.6;
+  max-width: 750px;
+  margin: 10px auto 20px auto;
+  color: var(--text-main) !important;
+  opacity: 0.95;
+}
+
+.section-heading {
+  color: var(--heading-main) !important;
+  font-size: clamp(1.6rem, 3vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+  margin: 0 auto 1.25rem;
+  padding: 0 0 0.6rem;
+  width: fit-content;
+  max-width: 100%;
+  border-bottom: 3px solid var(--accent-color);
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.tribe-title .section-heading {
+  transition: color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+.tribe-list:hover{
+    background-color: #b0a7a7;
+  transform: scale(1.12);
+}
+
+.Sifa > .section-heading {
+  padding-top: 0;
+}
+
+.hero-slogan {
+  font-size: 1rem;
+  color: var(--text-main) !important;
+}
+
+.hero-slogan span {
+  display: block;
+  font-size: 0.95rem;
+  opacity: 0.8;
+  margin-bottom: 4px;
+}
+
+/* 3. Quick Stat Metrics Bar */
+.project-stats-bar {
+  display: flex;
+  width: min(500px, calc(100% - 32px));
+  margin: 25px auto 0 5vw;
+  padding: 16px 24px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.stat-item {
+    margin-left: 0.04px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  text-align: left;
+}
+
+.stat-item strong {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--accent-color) !important;
+  line-height: 1.0;
+}
+
+.stat-item span {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-main) !important;
+  margin-top: 4px;
+  opacity: 0.9;
+  
+}
+
+/* Divider line between metric stats */
+.stat-item:not(:last-child) {
+  border-right: 1px solid var(--card-border);
+  padding-right: 25px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+  .project-stats-bar {
+    flex-direction: column;
+    gap: 15px;
+    padding: 10px;
+    margin-left: 16px;
+  }
+
+  .stat-item:not(:last-child) {
+    border-right: none;
+    border-bottom: 1px solid var(--card-border);
+    padding-right: 0;
+    padding-bottom: 12px;
+    width: 80%;
+  }
 }
