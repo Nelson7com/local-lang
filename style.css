@@ -86,6 +86,11 @@ body{
 }
 
 @media (max-width: 768px) {
+  .navbar {
+    position: fixed;
+    top: 0;
+  }
+
   .menu-btn {
     display: block;
   }
@@ -722,3 +727,4 @@ div[class*="card"] {
     width: 80%;
   }
 }
+

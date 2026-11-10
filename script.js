@@ -1,25 +1,4 @@
 
-  const menuBtn = document.getElementById('menuBtn');
-  const navMenu = document.getElementById('navMenu');
-
-  // Mtu akibonyeza icon ya nukta 3, fungua au funga menu
-  menuBtn.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-  });
-
-  // Mtu akibonyeza link yoyote ndani ya menu, menu ijifunge yenyewe
-  document.querySelectorAll('.nav-menu a').forEach(link => {
-    link.addEventListener('click', () => {
-      navMenu.classList.remove('active');
-    });
-  });
-
-
-
-
-
-
-
 const images = [
     "images/socio.jpg",
     "images/SONG.jpg",
@@ -346,3 +325,27 @@ const ThemeManager = (() => {
 
 // Auto-initialize theme management
 ThemeManager.init();
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const menuBtn = document.getElementById('menuBtn');
+  const navMenu = document.getElementById('navMenu');
+
+  if (menuBtn && navMenu) {
+    menuBtn.addEventListener('click', () => {
+      const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+      navMenu.classList.toggle('active', !isExpanded);
+      menuBtn.setAttribute('aria-expanded', String(!isExpanded));
+    });
+
+    navMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+        menuBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+});
