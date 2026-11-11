@@ -767,3 +767,199 @@ footer .footer-bottom {
 .tribe-card span {
   color: var(--tribe-name) !important;
 }
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.hero-section {
+  min-height: clamp(360px, 62vh, 640px);
+  height: auto;
+  margin-top: 60px;
+  padding: clamp(40px, 8vw, 120px) 24px;
+}
+
+.headings-overview,
+.headings,
+.tribe-title,
+.how,
+.Sifa {
+  width: min(100% - 40px, 1200px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.headings {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+}
+
+.headings h1 {
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 1.1;
+}
+
+.headings-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  width: min(100% - 40px, 1200px);
+  margin: 24px auto 0;
+}
+
+.project-stats-bar {
+  margin: 24px auto 0;
+}
+
+.tribe {
+  margin-top: 64px;
+}
+
+.how {
+  padding-top: 64px;
+}
+
+.how-container {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+  width: min(100% - 40px, 1200px);
+  padding-top: 32px;
+}
+
+.how > h3,
+.how > p {
+  width: min(100% - 40px, 1200px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.Sifa {
+  padding: 32px 0;
+  margin-top: 48px;
+}
+
+.Sifa > .sifa-description {
+  width: 100%;
+}
+
+.card-content {
+  padding: 0 18px 22px;
+}
+
+.footer-container {
+  width: min(100%, 1100px);
+}
+
+@media (max-width: 768px) {
+  .nav-container {
+    padding: 10px 16px;
+  }
+
+  .hero-section {
+    min-height: 440px;
+    margin-top: 56px;
+    padding: 56px 20px;
+  }
+
+  .hero-badge {
+    max-width: 100%;
+    white-space: normal;
+    line-height: 1.4;
+  }
+
+  .headings-container {
+    justify-content: center;
+  }
+
+  .headings-container button {
+    flex: 1 1 180px;
+  }
+
+  .how-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .card-image {
+    height: 220px;
+  }
+
+  .Sifa > .section-heading,
+  .Sifa > .sifa-description {
+    width: 100%;
+  }
+
+  footer {
+    padding: 32px 20px;
+  }
+}
+
+@media (max-width: 520px) {
+  .nav-logo {
+    font-size: 1.05rem;
+  }
+
+  .hero-section {
+    min-height: 400px;
+    padding: 44px 16px;
+  }
+
+  .headings-overview,
+  .headings,
+  .tribe-title,
+  .how,
+  .Sifa,
+  .how-container,
+  .how > h3,
+  .how > p,
+  .headings-container {
+    width: calc(100% - 32px);
+  }
+
+  .headings h1 {
+    font-size: clamp(1.8rem, 8vw, 2.5rem);
+  }
+
+  .hero-badge {
+    font-size: 0.75rem;
+    padding: 6px 10px;
+  }
+
+  .headings-container button {
+    flex-basis: 100%;
+  }
+
+  .project-stats-bar {
+    width: calc(100% - 32px);
+    margin: 24px auto 0;
+  }
+
+  .how-container {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .card-image {
+    height: 230px;
+  }
+
+  .tribe-title {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .tribe-title h1,
+  .tribe-title p {
+    margin-left: 0;
+  }
+
+  .Sifa > .section-heading {
+    font-size: 1.35rem;
+  }
+
+  footer {
+    padding: 28px 16px;
+  }
+}
