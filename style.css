@@ -364,8 +364,8 @@ body{
 }
 footer {
     margin-top: 80px;
-    background-color: #1b2a4a;
-    color: #f4f4f4;
+    background-color: var(--footer-bg);
+    color: var(--footer-text);
     padding: 40px;
     font-family: Arial, sans-serif;
     line-height: 1.6;
@@ -402,7 +402,7 @@ footer {
 }
 
 .footer-languages h4 {
-    color: #2e9cca;
+    color: white;
     margin-bottom: 15px;
     font-size: 1.2rem;
 }
@@ -429,16 +429,10 @@ footer {
     padding-top: 20px;
     margin-top: 20px;
     font-size: 0.85rem;
-    color: #9ca3af;
+    color: white;
 }
 
 
-
-
-
-/* ==========================================
-   1. THEME VARIABLES CONFIGURATION
-   ================================          */
 :root {
   /* Light Mode Defaults */
   --bg-primary: #ebe4e4;
@@ -458,6 +452,17 @@ footer {
   --input-border: #cbd5e1;
   --btn-bg: #242b90;
   --btn-text: #ffffff;
+
+  --footer-bg: #1b2a4a;
+  --footer-text: #f4f4f4;
+  --footer-muted: #d1d5db;
+  --footer-accent: #2e9cca;
+  --footer-border: #2d3748;
+
+  --tribe-card-bg: #ffffff;
+  --tribe-card-border: #cbd5e1;
+  --tribe-label: #334155;
+  --tribe-name: #1d4ed8;
 }
 
 [data-theme="dark"] {
@@ -479,11 +484,19 @@ footer {
   --input-border: #333333;
   --btn-bg: #3b82f6;
   --btn-text: #ffffff;
+
+  --footer-bg: #123b5d;
+  --footer-text: #f8fafc;
+  --footer-muted: #dbeafe;
+  --footer-accent: #7dd3fc;
+  --footer-border: #2b5574;
+
+  --tribe-card-bg: #172638;
+  --tribe-card-border: #334b63;
+  --tribe-label: #e2e8f0;
+  --tribe-name: #7dd3fc;
 }
 
-/* ==========================================
-   2. GLOBAL BASE STYLES & TRANSITIONS
-   ================================          */
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -507,9 +520,6 @@ section:nth-of-type(even) {
   background-color: var(--bg-secondary);
 }
 
-/* ==========================================
-   3. UNIVERSAL TEXT & HEADING COLOR RULES
-   ================================          */
 h1, h2, h3, h4, h5, h6 {
   color: var(--heading-main) !important;
   transition: color 0.3s ease;
@@ -520,9 +530,6 @@ p, span, li, a:not(.btn-start), strong {
   transition: color 0.3s ease;
 }
 
-/* ==========================================
-   4. NAVIGATION BAR STYLING
-   ================================          */
 .navbar {
   background-color: var(--nav-bg);
   border-bottom: 1px solid var(--nav-border);
@@ -538,26 +545,18 @@ p, span, li, a:not(.btn-start), strong {
   fill: var(--nav-text);
 }
 
-/* ==========================================
-   5. CARDS, BOXES & CONTAINERS
-   ================================          */
 .how-card, 
 .tribe-list, 
 footer, 
 div[class*="card"] {
-  background-color: var(--bg-card);
+  background-color: dvar(--bg-card);
   border-color: var(--card-border);
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
-
-/* Ensure SVG icons inside card titles match text color */
 .how-card svg, .card-content svg {
   fill: var(--text-main);
 }
 
-/* ==========================================
-   6. BUTTONS & CONTROLS
-   ================================          */
 .headings-container button, 
 .btn-start {
   background-color: var(--btn-bg);
@@ -577,9 +576,6 @@ div[class*="card"] {
   border-radius: 6px;
 }
 
-/* ==========================================
-   7. THEME ICON INTERACTION
-   ================================          */
 .theme-icon {
   cursor: pointer;
   user-select: none;
@@ -599,11 +595,6 @@ div[class*="card"] {
 
 
 
-/* ==========================================
-   PROJECT DEFINITION & HERO ENHANCEMENTS
-   ================================          */
-
-/* 1. Value Proposition Badge */
 .hero-badge {
   display: inline-block;
   background-color: var(--btn-bg);
@@ -618,9 +609,8 @@ div[class*="card"] {
   transition: background-color 0.3s ease;
 }
 
-/* 2. Elevator Pitch & Hero Description */
 .hero-description {
-  font-size: 1.15rem;
+  font-size: 1.12rem;
   line-height: 1.6;
   max-width: 750px;
   margin: 10px auto 20px auto;
@@ -635,14 +625,22 @@ div[class*="card"] {
   line-height: 1.25;
   text-align: center;
   margin: 0 auto 1.25rem;
-  padding: 0 0 0.6rem;
+  padding: 0 0 0.4rem;
   width: fit-content;
   max-width: 100%;
   border-bottom: 3px solid var(--accent-color);
   transition: color 0.3s ease, border-color 0.3s ease;
 }
 
+.tribe-title .section-heading,
+.Sifa > .section-heading {
+  font-size: clamp(1.25rem, 2.2vw, 1.65rem);
+}
+
 .tribe-title .section-heading {
+  margin-left: 10px;
+  margin-right: auto;
+  text-align: left;
   transition: color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
 }
 
@@ -652,7 +650,16 @@ div[class*="card"] {
 }
 
 .Sifa > .section-heading {
+  margin-left: 0;
+  margin-right: auto;
   padding-top: 0;
+  text-align: left;
+}
+
+.Sifa > .sifa-description {
+  max-width: 900px;
+  margin: 0 0 1.5rem;
+  line-height: 1.6;
 }
 
 .hero-slogan {
@@ -667,7 +674,6 @@ div[class*="card"] {
   margin-bottom: 4px;
 }
 
-/* 3. Quick Stat Metrics Bar */
 .project-stats-bar {
   display: flex;
   width: min(500px, calc(100% - 32px));
@@ -704,13 +710,11 @@ div[class*="card"] {
   
 }
 
-/* Divider line between metric stats */
 .stat-item:not(:last-child) {
   border-right: 1px solid var(--card-border);
   padding-right: 25px;
 }
 
-/* Mobile Responsiveness */
 @media (max-width: 600px) {
   .project-stats-bar {
     flex-direction: column;
@@ -728,3 +732,38 @@ div[class*="card"] {
   }
 }
 
+footer {
+  background-color: var(--footer-bg);
+  color: var(--footer-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+footer h1, footer h2, footer h3, footer h4, footer h5, footer h6 {
+  color: var(--footer-accent) !important;
+}
+
+footer p, footer li, footer a, footer span {
+  color: var(--footer-muted) !important;
+}
+
+footer strong {
+  color: var(--footer-text) !important;
+}
+
+footer .footer-bottom {
+  border-color: var(--footer-border);
+}
+
+.tribe-card {
+  background-color: var(--tribe-card-bg);
+  border-color: var(--tribe-card-border);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.tribe-card p {
+  color: var(--tribe-label) !important;
+}
+
+.tribe-card span {
+  color: var(--tribe-name) !important;
+}
